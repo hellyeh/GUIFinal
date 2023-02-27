@@ -1,0 +1,1721 @@
+
+function CreateForm {
+#[reflection.assembly]::loadwithpartialname("System.Windows.Forms") | Out-Null
+#[reflection.assembly]::loadwithpartialname("System.Drawing") | Out-Null
+
+Add-Type -AssemblyName System.Windows.Forms
+Add-Type -AssemblyName System.drawing
+#Add-PSSnapin Microsoft.Exchange.Management.PowerShell.SnapIn
+$EX13session = New-PSSession -ConfigurationName Microsoft.Exchange -ConnectionUri http://dc0-ex13c.hcma.com.au/PowerShell/ -Authentication Kerberos
+Import-PSSession $EX13session
+
+
+
+
+
+#Form Setup
+$form1 = New-Object System.Windows.Forms.Form
+$button1 = New-Object System.Windows.Forms.Button
+$button2 = New-Object System.Windows.Forms.Button
+$UnlockButton = New-Object System.Windows.Forms.Button
+#$PassButton = New-Object System.Windows.Forms.Button
+$checkBox3 = New-Object System.Windows.Forms.CheckBox
+$checkBox4 = New-Object System.Windows.Forms.CheckBox
+$BitlockerButton = New-Object System.Windows.Forms.Button
+$ENButton = New-Object System.Windows.Forms.Button
+$ClearAEButton = New-Object System.Windows.Forms.Button
+#$RemoteCDriveButton = New-Object System.Windows.Forms.Button
+$DMSaccess1 = New-Object System.Windows.Forms.CheckBox
+$DMSaccess2 = New-Object System.Windows.Forms.CheckBox
+$CRMaccess1 = New-Object System.Windows.Forms.CheckBox
+$AMTAccess = New-Object System.Windows.Forms.CheckBox
+$MSaccess = New-Object System.Windows.Forms.CheckBox
+$FinishADButton = New-Object System.Windows.Forms.Button
+$MoveGroupsButtons = New-Object System.Windows.Forms.Button
+$InfoButton = New-Object System.Windows.Forms.Button
+$ExchangeModuleButton = New-Object System.Windows.Forms.Button
+#$RemotePCINFOButton = New-Object System.Windows.Forms.Button
+$FindUNButton = New-Object System.Windows.Forms.Button
+$MBDBButton = New-Object System.Windows.Forms.Button
+$checkBox12 = New-Object System.Windows.Forms.CheckBox
+$checkBox13 = New-Object System.Windows.Forms.CheckBox
+$ComboBox1 = New-Object system.Windows.Forms.ComboBox
+$TabControl = New-object System.Windows.Forms.TabControl
+$UserControls = New-Object System.Windows.Forms.TabPage
+$ExchangePage = New-Object System.Windows.Forms.TabPage
+$TerminatePage = New-Object System.Windows.Forms.TabPage
+$FindPage = New-Object System.Windows.Forms.TabPage
+$ComboBox2 = New-Object system.Windows.Forms.ComboBox
+$checkBox5 = New-Object System.Windows.Forms.CheckBox
+$checkBox14 = New-Object System.Windows.Forms.CheckBox
+
+$InitialFormWindowState = New-Object System.Windows.Forms.FormWindowState
+
+#Form Parameter
+$form1.Text = "Help Desk GUI w/ Tabs"
+$form1.Name = "form1"
+$form1.TopMost = $False
+$form1.DataBindings.DefaultDataSourceUpdateMode = 0
+$System_Drawing_Size = New-Object System.Drawing.Size
+$System_Drawing_Size.Width = 605
+$System_Drawing_Size.Height = 700
+$form1.ClientSize = $System_Drawing_Size
+
+
+#Tab Control 
+$tabControl.DataBindings.DefaultDataSourceUpdateMode = 0
+$System_Drawing_Point = New-Object System.Drawing.Point
+$System_Drawing_Point.X = 15
+$System_Drawing_Point.Y = 85
+$tabControl.Location = $System_Drawing_Point
+$tabControl.Name = "tabControl"
+$System_Drawing_Size = New-Object System.Drawing.Size
+$System_Drawing_Size.Height = 600
+$System_Drawing_Size.Width = 575
+$tabControl.Size = $System_Drawing_Size
+$form1.Controls.Add($tabControl)
+
+#User Controls Page
+$UserControls.DataBindings.DefaultDataSourceUpdateMode = 0
+$UserControls.UseVisualStyleBackColor = $True
+$UserControls.Name = "User Controls"
+$UserControls.Text = "User Controls”
+$tabControl.Controls.Add($UserControls)
+
+#Disk Page
+$ExchangePage.DataBindings.DefaultDataSourceUpdateMode = 0
+$ExchangePage.UseVisualStyleBackColor = $True
+$ExchangePage.Name = "ExchangePage"
+$ExchangePage.Text = "Exchange”
+$tabControl.Controls.Add($ExchangePage)
+
+#Memory Page
+$TerminatePage.DataBindings.DefaultDataSourceUpdateMode = 0
+$TerminatePage.UseVisualStyleBackColor = $True
+$TerminatePage.Name = "TerminatePage"
+$TerminatePage.Text = "Terminate / HCM Mining”
+$tabControl.Controls.Add($TerminatePage)
+
+<# #Find Page
+$FindPage.DataBindings.DefaultDataSourceUpdateMode = 0
+$FindPage.UseVisualStyleBackColor = $True
+$FindPage.Name = "FindPage"
+$FindPage.Text = "Find”
+$tabControl.Controls.Add($FindPage)#>
+
+#Add Label and TextBox
+$objLabel = New-Object System.Windows.Forms.Label
+$objLabel.Location = New-Object System.Drawing.Size(15,25)  
+$objLabel.Size = New-Object System.Drawing.Size(190,20)  
+$objLabel.Text = "Enter User/Computer Name"
+$form1.Controls.Add($objLabel)
+$objTextBox = New-Object System.Windows.Forms.TextBox 
+$objTextBox.Location = New-Object System.Drawing.Size(15,45) 
+$objTextBox.Size = New-Object System.Drawing.Size(200,20)  
+$form1.Controls.Add($objTextBox) 
+
+#Add Firstname Ex
+$UserLabel = New-Object System.Windows.Forms.Label
+$UserLabel.Location = New-Object System.Drawing.Size(250,25)  
+$UserLabel.Size = New-Object System.Drawing.Size(190,20)  
+$UserLabel.Text = "Enter First Name"
+$ExchangePage.Controls.Add($UserLabel)
+$UserTextBox = New-Object System.Windows.Forms.TextBox 
+$UserTextBox.Location = New-Object System.Drawing.Size(250,45) 
+$UserTextBox.Size = New-Object System.Drawing.Size(200,20)  
+$ExchangePage.Controls.Add($UserTextBox) 
+
+#Add Lastname Ex
+$UserLastLabel = New-Object System.Windows.Forms.Label
+$UserLastLabel.Location = New-Object System.Drawing.Size(250,75)  
+$UserLastLabel.Size = New-Object System.Drawing.Size(190,20)  
+$UserLastLabel.Text = "Enter Last Name"
+$ExchangePage.Controls.Add($UserLastLabel)
+$UserLastTextBox = New-Object System.Windows.Forms.TextBox 
+$UserLastTextBox.Location = New-Object System.Drawing.Size(250,95) 
+$UserLastTextBox.Size = New-Object System.Drawing.Size(200,20)  
+$ExchangePage.Controls.Add($UserLastTextBox) 
+
+<#Add Password Texbox 
+$PassLabel = New-Object System.Windows.Forms.Label
+$PassLabel.Location = New-Object System.Drawing.Size(375,25)  
+$PassLabel.Size = New-Object System.Drawing.Size(70,20)  
+$PassLabel.Text = "Password"
+$form1.Controls.Add($PassLabel)
+$PassTextbox = New-Object System.Windows.Forms.TextBox 
+$PassTextbox.Location = New-Object System.Drawing.Size(375,45) 
+$PassTextbox.Size = New-Object System.Drawing.Size(200,20)  
+$form1.Controls.Add($PassTextbox)
+#> 
+#Button 1 Action 
+$button1_RunOnClick= 
+{   
+    if ($checkBox3.Checked)    {  Terminate-HCAUser 
+    $checkBox3.Checked=$False} 
+    if ($checkBox5.Checked)    {  Setup_HCMMining   }
+}
+
+
+
+#Button Actions
+$UnlockButton_RunOnClick ={ Unlockuser} 
+#$PassButton_RunOnClick = {Password}
+$InfoButton_RunOnClick = { Get-HCAInfo }
+$ENButton_RunOnClick = { good-pass  }
+$ClearAEButton_RunOnClick = {  Clear-ADAccountExpiration -Identity $objTextBox.Text }
+$FindUNButton_RunOnClick = { Get-NextAva $objTextBox.Text }
+$FinishADButton_RunOnClick = {  Finish-ADAccount   }
+$MoveGroupsButtons_RunOnClick = {   Move-HCASite $ComboBox1.Text    } 
+$BitlockerButton_RunOnClick = {  $bl = Get-HCABitlocker 
+                                   $textbox3.text = $bl.RecoveryPassword   } 
+$ExchangeModuleButton_RunOnClick = { $textbox2.text = get-mailinfo }
+$MBDBButton_RunOnClick = { Create-Mailbox  } 
+#$RemoteCDriveButton_RunOnClick = {  $pcname = $objTextBox.Text
+                                      #invoke-item \\$pcname\c$ }
+$RemotePCINFOButton_RunOnClick = { $textbox3.text =  Get-RemoteComputerInfo }
+
+
+<#Button 2 Action
+$button2_RunOnClick= 
+{   
+    if ($checkBox1.Checked) {$checkBox1.CheckState = 0}
+    if ($checkBox2.Checked) {$checkBox2.CheckState = 0}
+    if ($checkBox3.Checked) {$checkBox3.CheckState = 0}
+    if ($checkBox4.Checked) {$checkBox4.CheckState = 0}
+    if ($checkBox5.Checked) {$checkBox5.CheckState = 0}
+    if ($checkBox6.Checked) {$checkBox6.CheckState = 0}
+    if ($checkBox7.Checked) {$checkBox7.CheckState = 0}
+    if ($checkBox8.Checked) {$checkBox8.CheckState = 0}
+    if ($checkBox9.Checked) {$checkBox9.CheckState = 0}
+    if ($checkBox10.Checked) {$checkBox10.CheckState = 0}
+    if ($checkBox11.Checked) {$checkBox11.CheckState = 0}
+    
+}
+#>
+$OnLoadForm_StateCorrection=
+{
+    $form1.WindowState = $InitialFormWindowState
+}
+ 
+#Button 1
+$button1.TabIndex = 4
+$button1.Name = "button1"
+$System_Drawing_Size = New-Object System.Drawing.Size
+$System_Drawing_Size.Width = 75
+$System_Drawing_Size.Height = 25
+$button1.Size = $System_Drawing_Size
+$button1.UseVisualStyleBackColor = $True
+$button1.Text = "Run"
+$System_Drawing_Point = New-Object System.Drawing.Point
+$System_Drawing_Point.X = 25
+$System_Drawing_Point.Y = 75
+$button1.Location = $System_Drawing_Point
+$button1.DataBindings.DefaultDataSourceUpdateMode = 0
+$button1.add_Click($button1_RunOnClick)
+$TerminatePage.Controls.Add($button1)
+
+<#
+#Button 2
+$button2.TabIndex = 4
+$button2.Name = "button2"
+$System_Drawing_Size = New-Object System.Drawing.Size
+$System_Drawing_Size.Width = 150
+$System_Drawing_Size.Height = 25
+$button2.Size = $System_Drawing_Size
+$button2.UseVisualStyleBackColor = $True
+$button2.Text = "Clear CheckBox"
+$System_Drawing_Point = New-Object System.Drawing.Point
+$System_Drawing_Point.X = 450
+$System_Drawing_Point.Y = 45
+$button2.Location = $System_Drawing_Point
+$button2.DataBindings.DefaultDataSourceUpdateMode = 0
+$button2.add_Click($button2_RunOnClick)
+$form1.Controls.Add($button2)
+#>
+
+#Unlock Button
+$UnlockButton.TabIndex = 4
+$UnlockButton.Name = "UnlockButton"
+$System_Drawing_Size = New-Object System.Drawing.Size
+$System_Drawing_Size.Width = 150
+$System_Drawing_Size.Height = 50
+$UnlockButton.Size = $System_Drawing_Size
+$UnlockButton.UseVisualStyleBackColor = $True
+$UnlockButton.Text = "Unlock Account"
+$System_Drawing_Point = New-Object System.Drawing.Point
+$System_Drawing_Point.X = 25
+$System_Drawing_Point.Y = 75
+$UnlockButton.Location = $System_Drawing_Point
+$UnlockButton.DataBindings.DefaultDataSourceUpdateMode = 0
+$UnlockButton.add_Click($UnlockButton_RunOnClick)
+$UserControls.Controls.Add($UnlockButton)
+
+<#
+#Change Pass Button
+$PassButton.TabIndex = 4
+$PassButton.Name = "PassButton"
+$System_Drawing_Size = New-Object System.Drawing.Size
+$System_Drawing_Size.Width = 150
+$System_Drawing_Size.Height = 50
+$PassButton.Size = $System_Drawing_Size
+$PassButton.UseVisualStyleBackColor = $True
+$PassButton.Text = "Change Password"
+$System_Drawing_Point = New-Object System.Drawing.Point
+$System_Drawing_Point.X = 25
+$System_Drawing_Point.Y = 175
+$PassButton.Location = $System_Drawing_Point
+$PassButton.DataBindings.DefaultDataSourceUpdateMode = 0
+$PassButton.add_Click($PassButton_RunOnClick)
+$UserControls.Controls.Add($PassButton)
+#>
+
+#Terminate
+$checkBox3.UseVisualStyleBackColor = $True
+$System_Drawing_Size = New-Object System.Drawing.Size
+$System_Drawing_Size.Width = 104
+$System_Drawing_Size.Height = 24
+$checkBox3.Size = $System_Drawing_Size
+$checkBox3.TabIndex = 0
+$checkBox3.Text = "Terminate"
+$System_Drawing_Point = New-Object System.Drawing.Point
+$System_Drawing_Point.X = 25
+$System_Drawing_Point.Y = 25
+$checkBox3.Location = $System_Drawing_Point
+$checkBox3.DataBindings.DefaultDataSourceUpdateMode = 0
+$checkBox3.Name = "checkBox3"
+$TerminatePage.Controls.Add($checkBox3)
+
+#HCM Mining
+$checkBox5.UseVisualStyleBackColor = $True
+$System_Drawing_Size = New-Object System.Drawing.Size
+$System_Drawing_Size.Width = 104
+$System_Drawing_Size.Height = 24
+$checkBox5.Size = $System_Drawing_Size
+$checkBox5.TabIndex = 0
+$checkBox5.Text = "HCM Mining"
+$System_Drawing_Point = New-Object System.Drawing.Point
+$System_Drawing_Point.X = 150
+$System_Drawing_Point.Y = 25
+$checkBox5.Location = $System_Drawing_Point
+$checkBox5.DataBindings.DefaultDataSourceUpdateMode = 0
+$checkBox5.Name = "checkBox3"
+$TerminatePage.Controls.Add($checkBox5)
+
+#Generic Button
+$checkbox4.UseVisualStyleBackColor = $True
+$System_Drawing_Size = New-Object System.Drawing.Size
+$System_Drawing_Size.Width = 154
+$System_Drawing_Size.Height = 24
+$checkBox4.Size = $System_Drawing_Size
+$checkBox4.TabIndex = 1
+$checkBox4.Text = "Generic Account?"
+$System_Drawing_Point = New-Object System.Drawing.Point
+$System_Drawing_Point.X = 400
+$System_Drawing_Point.Y = 50
+$checkBox4.Location = $System_Drawing_Point
+$checkBox4.DataBindings.DefaultDataSourceUpdateMode = 0
+$checkBox4.Name = "checkBox4"
+$UserControls.Controls.Add($checkBox4)
+
+#Don't Enforce PW Change
+$checkbox14.UseVisualStyleBackColor = $True
+$System_Drawing_Size = New-Object System.Drawing.Size
+$System_Drawing_Size.Width = 154
+$System_Drawing_Size.Height = 24
+$checkbox14.Size = $System_Drawing_Size
+$checkbox14.TabIndex = 1
+$checkbox14.Text = "Don't enforce PW change"
+$System_Drawing_Point = New-Object System.Drawing.Point
+$System_Drawing_Point.X = 25
+$System_Drawing_Point.Y = 175
+$checkbox14.Location = $System_Drawing_Point
+$checkbox14.DataBindings.DefaultDataSourceUpdateMode = 0
+$checkbox14.Name = "checkbox14"
+$UserControls.Controls.Add($checkbox14)
+
+#Employee Number Button
+$ENButton.TabIndex = 4
+$ENButton.Name = "Random Password"
+$System_Drawing_Size = New-Object System.Drawing.Size
+$System_Drawing_Size.Width = 150
+$System_Drawing_Size.Height = 50
+$ENButton.Size = $System_Drawing_Size
+$ENButton.UseVisualStyleBackColor = $True
+$ENButton.Text = "Random Password"
+$System_Drawing_Point = New-Object System.Drawing.Point
+$System_Drawing_Point.X = 25
+$System_Drawing_Point.Y = 125
+$ENButton.Location = $System_Drawing_Point
+$ENButton.DataBindings.DefaultDataSourceUpdateMode = 0
+$ENButton.add_Click($ENButton_RunOnClick)
+$UserControls.Controls.Add($ENButton)
+
+#Info Button
+$InfoButton.TabIndex = 4
+$InfoButton.Name = "InfoButton"
+$System_Drawing_Size = New-Object System.Drawing.Size
+$System_Drawing_Size.Width = 150
+$System_Drawing_Size.Height = 50
+$InfoButton.Size = $System_Drawing_Size
+$InfoButton.UseVisualStyleBackColor = $True
+$InfoButton.Text = "Info"
+$System_Drawing_Point = New-Object System.Drawing.Point
+$System_Drawing_Point.X = 25
+$System_Drawing_Point.Y = 25
+$InfoButton.Location = $System_Drawing_Point
+$InfoButton.DataBindings.DefaultDataSourceUpdateMode = 0
+$InfoButton.add_Click($InfoButton_RunOnClick)
+$UserControls.Controls.Add($InfoButton)
+
+#Move to Site Groups Button
+$MoveGroupsButtons.TabIndex = 4
+$MoveGroupsButtons.Name = "InfoButton"
+$System_Drawing_Size = New-Object System.Drawing.Size
+$System_Drawing_Size.Width = 150
+$System_Drawing_Size.Height = 50
+$MoveGroupsButtons.Size = $System_Drawing_Size
+$MoveGroupsButtons.UseVisualStyleBackColor = $True
+$MoveGroupsButtons.Text = "Move Site Groups"
+$System_Drawing_Point = New-Object System.Drawing.Point
+$System_Drawing_Point.X = 225
+$System_Drawing_Point.Y = 125
+$MoveGroupsButtons.Location = $System_Drawing_Point
+$MoveGroupsButtons.DataBindings.DefaultDataSourceUpdateMode = 0
+$MoveGroupsButtons.add_Click($MoveGroupsButtons_RunOnClick)
+$UserControls.Controls.Add($MoveGroupsButtons)
+
+#Finish AD Account Button
+$FinishADButton.TabIndex = 4
+$FinishADButton.Name = "FinishADButton"
+$System_Drawing_Size = New-Object System.Drawing.Size
+$System_Drawing_Size.Width = 150
+$System_Drawing_Size.Height = 50
+$FinishADButton.Size = $System_Drawing_Size
+$FinishADButton.UseVisualStyleBackColor = $True
+$FinishADButton.Text = "Finish AD Account"
+$System_Drawing_Point = New-Object System.Drawing.Point
+$System_Drawing_Point.X = 225
+$System_Drawing_Point.Y = 75
+$FinishADButton.Location = $System_Drawing_Point
+$FinishADButton.DataBindings.DefaultDataSourceUpdateMode = 0
+$FinishADButton.add_Click($FinishADButton_RunOnClick)
+$UserControls.Controls.Add($FinishADButton)
+
+<#Open Remote C Drive
+$RemoteCDriveButton.TabIndex = 4
+$RemoteCDriveButton.Name = "RemoteCDriveButton"
+$System_Drawing_Size = New-Object System.Drawing.Size
+$System_Drawing_Size.Width = 150
+$System_Drawing_Size.Height = 50
+$RemoteCDriveButton.Size = $System_Drawing_Size
+$RemoteCDriveButton.UseVisualStyleBackColor = $True
+$RemoteCDriveButton.Text = "Open Remote C:"
+$System_Drawing_Point = New-Object System.Drawing.Point
+$System_Drawing_Point.X = 400
+$System_Drawing_Point.Y = 175
+$RemoteCDriveButton.Location = $System_Drawing_Point
+$RemoteCDriveButton.DataBindings.DefaultDataSourceUpdateMode = 0
+$RemoteCDriveButton.add_Click($RemoteCDriveButton_RunOnClick)
+$UserControls.Controls.Add($RemoteCDriveButton)
+#>
+
+#AMT Access Button
+$amtaccess.UseVisualStyleBackColor = $True
+$System_Drawing_Size = New-Object System.Drawing.Size
+$System_Drawing_Size.Width = 154
+$System_Drawing_Size.Height = 24
+$amtaccess.Size = $System_Drawing_Size
+$amtaccess.TabIndex = 1
+$amtaccess.Text = "AMT"
+$System_Drawing_Point = New-Object System.Drawing.Point
+$System_Drawing_Point.X = 400
+$System_Drawing_Point.Y = 70
+$amtaccess.Location = $System_Drawing_Point
+$amtaccess.DataBindings.DefaultDataSourceUpdateMode = 0
+$amtaccess.Name = "amtaccess"
+$UserControls.Controls.Add($amtaccess)
+
+#Mainstay Access Button
+$MSaccess.UseVisualStyleBackColor = $True
+$System_Drawing_Size = New-Object System.Drawing.Size
+$System_Drawing_Size.Width = 154
+$System_Drawing_Size.Height = 24
+$MSaccess.Size = $System_Drawing_Size
+$MSaccess.TabIndex = 1
+$MSaccess.Text = "Mainstay"
+$System_Drawing_Point = New-Object System.Drawing.Point
+$System_Drawing_Point.X = 400
+$System_Drawing_Point.Y = 90
+$MSaccess.Location = $System_Drawing_Point
+$MSaccess.DataBindings.DefaultDataSourceUpdateMode = 0
+$MSaccess.Name = "MSaccess"
+$UserControls.Controls.Add($MSaccess)
+
+#DMS Access Finance Button
+$DMSaccess1.UseVisualStyleBackColor = $True
+$System_Drawing_Size = New-Object System.Drawing.Size
+$System_Drawing_Size.Width = 154
+$System_Drawing_Size.Height = 24
+$DMSaccess1.Size = $System_Drawing_Size
+$DMSaccess1.TabIndex = 1
+$DMSaccess1.Text = "DMS Finance License"
+$System_Drawing_Point = New-Object System.Drawing.Point
+$System_Drawing_Point.X = 400
+$System_Drawing_Point.Y = 110
+$DMSaccess1.Location = $System_Drawing_Point
+$DMSaccess1.DataBindings.DefaultDataSourceUpdateMode = 0
+$DMSaccess1.Name = "DMSaccess1"
+$UserControls.Controls.Add($DMSaccess1)
+
+#DMS Access Activity Button
+$DMSaccess2.UseVisualStyleBackColor = $True
+$System_Drawing_Size = New-Object System.Drawing.Size
+$System_Drawing_Size.Width = 154
+$System_Drawing_Size.Height = 24
+$DMSaccess2.Size = $System_Drawing_Size
+$DMSaccess2.TabIndex = 1
+$DMSaccess2.Text = "DMS Activity License"
+$System_Drawing_Point = New-Object System.Drawing.Point
+$System_Drawing_Point.X = 400
+$System_Drawing_Point.Y = 130
+$DMSaccess2.Location = $System_Drawing_Point
+$DMSaccess2.DataBindings.DefaultDataSourceUpdateMode = 0
+$DMSaccess2.Name = "DMSaccess2"
+$UserControls.Controls.Add($DMSaccess2)
+
+#CRM Access Button
+$CRMaccess1.UseVisualStyleBackColor = $True
+$System_Drawing_Size = New-Object System.Drawing.Size
+$System_Drawing_Size.Width = 154
+$System_Drawing_Size.Height = 24
+$CRMaccess1.Size = $System_Drawing_Size
+$CRMaccess1.TabIndex = 1
+$CRMaccess1.Text = "CRM License"
+$System_Drawing_Point = New-Object System.Drawing.Point
+$System_Drawing_Point.X = 400
+$System_Drawing_Point.Y = 150
+$CRMaccess1.Location = $System_Drawing_Point
+$CRMaccess1.DataBindings.DefaultDataSourceUpdateMode = 0
+$CRMaccess1.Name = "CRMaccess1"
+$UserControls.Controls.Add($CRMaccess1)
+
+<#Remote Pc Info
+$RemotePCINFOButton.TabIndex = 4
+$RemotePCINFOButton.Name = "RemotePCINFOButton"
+$System_Drawing_Size = New-Object System.Drawing.Size
+$System_Drawing_Size.Width = 150
+$System_Drawing_Size.Height = 50
+$RemotePCINFOButton.Size = $System_Drawing_Size
+$RemotePCINFOButton.UseVisualStyleBackColor = $True
+$RemotePCINFOButton.Text = "PC Info"
+$System_Drawing_Point = New-Object System.Drawing.Point
+$System_Drawing_Point.X = 400
+$System_Drawing_Point.Y = 125
+$RemotePCINFOButton.Location = $System_Drawing_Point
+$RemotePCINFOButton.DataBindings.DefaultDataSourceUpdateMode = 0
+$RemotePCINFOButton.add_Click($RemotePCINFOButton_RunOnClick)
+$UserControls.Controls.Add($RemotePCINFOButton)
+#>
+
+#Find Username
+$FindUNButton.TabIndex = 4
+$FindUNButton.Name = "Find Next Username"
+$System_Drawing_Size = New-Object System.Drawing.Size
+$System_Drawing_Size.Width = 150
+$System_Drawing_Size.Height = 50
+$FindUNButton.Size = $System_Drawing_Size
+$FindUNButton.UseVisualStyleBackColor = $True
+$FindUNButton.Text = "Find Username (last, first)"
+$System_Drawing_Point = New-Object System.Drawing.Point
+$System_Drawing_Point.X = 25
+$System_Drawing_Point.Y = 125
+$FindUNButton.Location = $System_Drawing_Point
+$FindUNButton.DataBindings.DefaultDataSourceUpdateMode = 0
+$FindUNButton.add_Click($FindUNButton_RunOnClick)
+$ExchangePage.Controls.Add($FindUNButton)
+
+#Get Mailbox Button
+$ExchangeModuleButton.TabIndex = 4
+$ExchangeModuleButton.Name = "ExchangeModuleButton"
+$System_Drawing_Size = New-Object System.Drawing.Size
+$System_Drawing_Size.Width = 150
+$System_Drawing_Size.Height = 50
+$ExchangeModuleButton.Size = $System_Drawing_Size
+$ExchangeModuleButton.UseVisualStyleBackColor = $True
+$ExchangeModuleButton.Text = "Get Mailbox Info"
+$System_Drawing_Point = New-Object System.Drawing.Point
+$System_Drawing_Point.X = 25
+$System_Drawing_Point.Y = 25
+$ExchangeModuleButton.Location = $System_Drawing_Point
+$ExchangeModuleButton.DataBindings.DefaultDataSourceUpdateMode = 0
+$ExchangeModuleButton.add_Click($ExchangeModuleButton_RunOnClick)
+$ExchangePage.Controls.Add($ExchangeModuleButton)
+
+#Create Exchange Account
+$MBDBButton.TabIndex = 4
+$MBDBButton.Name = "ExchangeModuleButton"
+$System_Drawing_Size = New-Object System.Drawing.Size
+$System_Drawing_Size.Width = 150
+$System_Drawing_Size.Height = 50
+$MBDBButton.Size = $System_Drawing_Size
+$MBDBButton.UseVisualStyleBackColor = $True
+$MBDBButton.Text = "Create Exchange Account"
+$System_Drawing_Point = New-Object System.Drawing.Point
+$System_Drawing_Point.X = 25
+$System_Drawing_Point.Y = 75
+$MBDBButton.Location = $System_Drawing_Point
+$MBDBButton.DataBindings.DefaultDataSourceUpdateMode = 0
+$MBDBButton.add_Click($MBDBButton_RunOnClick)
+$ExchangePage.Controls.Add($MBDBButton)
+
+#Account Expiration Button
+$ClearAEButton.TabIndex = 0
+$ClearAEButton.Name = "ClearAEButton1"
+$System_Drawing_Size = New-Object System.Drawing.Size
+$System_Drawing_Size.Width = 150
+$System_Drawing_Size.Height = 50
+$ClearAEButton.Size = $System_Drawing_Size
+$ClearAEButton.UseVisualStyleBackColor = $True
+$ClearAEButton.Text = "Clear Account Expiry"
+$System_Drawing_Point = New-Object System.Drawing.Point
+$System_Drawing_Point.X = 225
+$System_Drawing_Point.Y = 25
+$ClearAEButton.Location = $System_Drawing_Point
+$ClearAEButton.DataBindings.DefaultDataSourceUpdateMode = 0
+$ClearAEButton.add_Click($ClearAEButton_RunOnClick)
+$UserControls.Controls.Add($ClearAEButton)
+
+#Bitlocker Button
+$BitlockerButton.TabIndex = 4
+$BitlockerButton.Name = "InfoButton"
+$System_Drawing_Size = New-Object System.Drawing.Size
+$System_Drawing_Size.Width = 150
+$System_Drawing_Size.Height = 50
+$BitlockerButton.Size = $System_Drawing_Size
+$BitlockerButton.UseVisualStyleBackColor = $True
+$BitlockerButton.Text = "Bitlocker"
+$System_Drawing_Point = New-Object System.Drawing.Point
+$System_Drawing_Point.X = 225
+$System_Drawing_Point.Y = 175
+$BitlockerButton.Location = $System_Drawing_Point
+$BitlockerButton.DataBindings.DefaultDataSourceUpdateMode = 0
+$BitlockerButton.add_Click($BitlockerButton_RunOnClick)
+$UserControls.Controls.Add($BitlockerButton)
+
+#First Name Search
+$checkBox12.UseVisualStyleBackColor = $True
+$System_Drawing_Size = New-Object System.Drawing.Size
+$System_Drawing_Size.Width = 150
+$System_Drawing_Size.Height = 24
+$checkBox12.Size = $System_Drawing_Size
+$checkBox12.TabIndex = 0
+$checkBox12.Text = "First Name"
+$System_Drawing_Point = New-Object System.Drawing.Point
+$System_Drawing_Point.X = 25
+$System_Drawing_Point.Y = 75
+$checkBox12.Location = $System_Drawing_Point
+$checkBox12.DataBindings.DefaultDataSourceUpdateMode = 0
+$checkBox12.Name = "checkBox12"
+$FindPage.Controls.Add($checkBox12)
+
+#Last Name Search
+$checkBox13.UseVisualStyleBackColor = $True
+$System_Drawing_Size = New-Object System.Drawing.Size
+$System_Drawing_Size.Width = 150
+$System_Drawing_Size.Height = 24
+$checkBox13.Size = $System_Drawing_Size
+$checkBox13.TabIndex = 0
+$checkBox13.Text = "Last Name"
+$System_Drawing_Point = New-Object System.Drawing.Point
+$System_Drawing_Point.X = 25
+$System_Drawing_Point.Y = 100
+$checkBox13.Location = $System_Drawing_Point
+$checkBox13.DataBindings.DefaultDataSourceUpdateMode = 0
+$checkBox13.Name = "checkBox13"
+$FindPage.Controls.Add($checkBox13)
+
+#Search Field
+$FindLabel = New-Object System.Windows.Forms.Label
+$FindLabel.Location = New-Object System.Drawing.Size(10,45)  
+$FindLabel.Size = New-Object System.Drawing.Size(110,50)  
+$FindLabel.Text = "Search"
+$FindPage.Controls.Add($FindLabel)
+$FindBox = New-Object System.Windows.Forms.TextBox 
+$FindBox.Location = New-Object System.Drawing.Size(125,45) 
+$FindBox.Size = New-Object System.Drawing.Size(200,20)  
+$FindPage.Controls.Add($FindBox) 
+
+#Drop Down Site Box
+$ComboBox1                       = New-Object system.Windows.Forms.ComboBox
+$ComboBox1.text                  = "Sites"
+$ComboBox1.width                 = 100
+$ComboBox1.height                = 20
+@(‘Bunbury’,’Adelaide’,’Brisbane’,’Canberra’,’Darwin’,’Emerald’,’Gunnedah’,’Kalgoorlie’,’Launceston’,’Mackay’,’Melbourne’,’Muswellbrook’,’Newcastle’,'Parramatta',’Perth’,’Port Headland’,’Revesby’,’Somerton’,’Tom Price’,’Townsville’,'Toowoomba',’Wacol’) | ForEach-Object {[void] $ComboBox1.Items.Add($_)}
+$ComboBox1.location              = New-Object System.Drawing.Point(425,25)
+$ComboBox1.Font                  = 'Microsoft Sans Serif,10'
+$UserControls.Controls.Add($ComboBox1)
+
+#Drop Down Site Box
+$ComboBox2                       = New-Object system.Windows.Forms.ComboBox
+$ComboBox2.text                  = "Sites"
+$ComboBox2.width                 = 100
+$ComboBox2.height                = 20
+@(‘Bunbury’,’Adelaide’,’Brisbane’,’Canberra’,’Darwin’,’Emerald’,’Gunnedah’,’Kalgoorlie’,’Launceston’,’Mackay’,’Melbourne’,’Muswellbrook’,’Newcastle’,'Parramatta',’Perth’,’Port Headland’,’Revesby’,’Somerton’,’Tom Price’,’Townsville’,'Toowoomba',’Wacol’) | ForEach-Object {[void] $ComboBox2.Items.Add($_)}
+$ComboBox2.location              = New-Object System.Drawing.Point(460,25)
+$ComboBox2.Font                  = 'Microsoft Sans Serif,10'
+$ExchangePage.Controls.Add($ComboBox2)
+
+#Employee Number Results
+$TextBox3                        = New-Object system.Windows.Forms.TextBox
+$TextBox3.multiline              = $true
+$TextBox3.width                  = 515
+$TextBox3.height                 = 310
+$TextBox3.location               = New-Object System.Drawing.Point(25,250) #(51,453)
+$TextBox3.Font                   = 'Microsoft Sans Serif,10'
+$UserControls.Controls.Add($textBox3)
+
+
+#Exchange Results
+$TextBox2                        = New-Object system.Windows.Forms.TextBox
+$TextBox2.multiline              = $true
+$TextBox2.width                  = 515
+$TextBox2.height                 = 175
+$TextBox2.location               = New-Object System.Drawing.Point(25,250) #(51,453)
+$TextBox2.Font                   = 'Microsoft Sans Serif,10'
+$ExchangePage.Controls.Add($textBox2)
+
+
+#Save the initial state of the form
+$InitialFormWindowState = $form1.WindowState
+#Init the OnLoad event to correct the initial state of the form
+$form1.add_Load($OnLoadForm_StateCorrection)
+#Show the Form
+$form1.ShowDialog()| Out-Null
+} #End function CreateForm
+
+
+ 
+function Unlockuser ()
+{
+ 
+    $user = $objTextBox.text
+    $LOStatus1 =  Get-ADUser $user -Properties lockedout, samaccountname, givenname | select lockedout, samaccountname, givenname
+    $LOStatus = $LOStatus1.lockedout 
+    $samacc = $LOStatus1.samaccountname
+    $givenname = $LOStatus1.givenname
+    if ($LOStatus -eq $false)
+    {
+    $textbox3.text = "User account is not locked"
+    }
+    else 
+    {
+    Unlock-ADAccount -Identity $user
+    $textbox3.Text = "$user has been unlocked"
+     Send-MailMessage -To "$samacc@hcma.com.au" -From "itnotifications@hcma.com.au" -Subject "Account Unlocked" -Body "Hi $givenname, Your account has been unlocked." -SmtpServer smtp.hcma.com.au
+    }
+    
+
+}
+
+function Get-HCAInfo ()
+{
+#$info = get-aduser $objTextBox.text -Properties givenname,surname,lockedout,enabled,passwordexpired,distinguishedname | select givenname,surname,lockedout,enabled,passwordexpired,distinguishedname
+$info = get-aduser $objTextBox.text -Properties *| select title,description,givenname,surname,company,office,telephone,mobilephone,badlogoncount,lockedout,enabled,passwordexpired,@{ Name = "Account Expiry Date"; Expression={$_.AccountExpirationDate}},distinguishedname,created,employeenumber,extensionattribute10
+
+$title = $info.title
+$Description = $info.description
+$GN = $info.givenname
+$SN = $info.surname
+$Office = $info.office
+$Company = $info.company
+$Telephone = $info.telephone
+$Mobilephone = $info.mobilephone
+$BadLogonCount = $Info.badlogoncount
+$LockoutStatus = $info.lockedout
+$EnabledStatus = $info.enabled
+$PasswordExpiry = $info.passwordexpired
+$AccountExpirationDate = $info.'Account Expiry Date'
+$DistinguishedName = $info.distinguishedname
+$AccountCreationDate = $info.created
+$ENNUM = $info.employeenumber
+$LDAPID = $info.extensionattribute10
+if ($LockoutStatus -eq "true")
+{
+$LockoutStatus1 = "Yes"
+}
+else
+{
+$LockoutStatus1 = "No"
+}
+if ($EnabledStatus -eq "true")
+{
+$EnabledStatus1 = "Yes"
+}
+else
+{
+$EnabledStatus1 = "No"
+}
+if ($PasswordExpiry -eq "true")
+{
+$PasswordExpiry1 = "Yes" 
+}
+else
+{
+$PasswordExpiry1 =  "No"
+}
+if($AccountExpirationDate -eq $Null)
+{
+$AccountExpiry = "Not expired"
+}
+else
+{
+$AccountExpiry = "Yes " + $info.'Account Expiry Date'
+}
+
+if ($LockoutStatus1 -eq "Yes")
+{
+$textbox3.BackColor = 'pink'
+}
+if ($EnabledStatus1 -eq "No")
+{
+ $textbox3.BackColor = 'pink'   
+}
+
+if ($PasswordExpiry -eq "Yes")
+{
+ $textbox3.BackColor = 'pink'   
+}
+if ($AccountExpiry -ne "Not Expired")
+
+{
+$textbox3.BackColor = 'pink' 
+}
+
+else
+{
+$textbox3.BackColor = 'lightgreen'
+}
+###################################################################################################################### 
+$textbox3.text = "Title: $title
+Description: $Description
+First Name: $gn
+Lastname: $sn
+Company: $company
+Office: $office
+Telephone: $Telephone
+Mobile Phone: $Mobilephone
+
+Bad Logon Count: $BadLogonCount
+Locked Out? $LockoutStatus1
+Enabled? $EnabledStatus1
+Password Expired? $PasswordExpiry1
+Account Expired? $AccountExpiry
+Distinguished Name: $DistinguishedName
+Account Creation Date: $AccountCreationDate
+LDAP ID: $LDAPID
+Employee Number:  $ENNUM"
+}
+
+function Set-HCAPassword ($user, $pass)
+{
+    Set-ADAccountPassword -Identity $user -NewPassword (ConvertTo-SecureString -AsPlainText "$pass" -Force)
+    $textbox3.Text = "$email password has been set to $pass"
+}
+
+function Password ()
+   {
+
+    $user =  Get-ADUser $objTextBox.text
+
+    $pass = $passtextbox.Text
+
+    $user1 = $user.givenname
+
+    $email = $user.samaccountname
+
+    Set-HCAPassword $user "$pass"
+
+    
+   }
+
+
+function Setup_HCMMining ()
+{
+    $User = $objTextBox.text
+
+    Set-ADUser -Identity $user -Add @{extensionAttribute1 = "HCM Mining"}
+}
+
+function Terminate-HCAUser ()
+{
+
+   $user = $objTextBox.text
+
+   $date = get-date -Format d
+
+Disable-ADAccount $user
+
+#Set-ADAccountExpiration -Identity $user -DateTime "$date"
+
+Get-ADUser -Identity $User -Properties MemberOf | ForEach-Object {
+  $_.MemberOf | Remove-ADGroupMember -Members $_.DistinguishedName -Confirm:$false
+}
+$guid = Get-ADUser $user -Properties objectguid | select objectguid
+
+ Move-ADObject $guid.objectguid -TargetPath "OU=Disabled Users,OU=Disabled Objects,OU=HCMA,DC=hcma,DC=com,DC=au"
+  
+ Set-ADUser $guid.objectguid -Company $null
+
+ ##LDAP ID TERMINATION
+
+$ldap = Get-ADUser $user -Properties givenname,surname,UserPrincipalName,extensionattribute10 | select extensionattribute10,givenname,surname,UserPrincipalName
+
+$LDAPID = $ldap.extensionattribute10
+
+$LDAPFN = $ldap.giveNname
+
+$LDAPSN = $ldap.surname
+
+$LDAPEMAIL = $ldap.UserPrincipalName
+
+$email = "Dear MNG-HITNET team,
+
+User - $LDAPFN $LDAPSN : $LDAPEMAIL is no longer employed with HCA.
+
+Please remove the LDAP ID $LDAPID
+
+
+Thank You
+
+HCA IT Team."
+
+if ($LDAPID -ne $null)
+{
+    Send-MailMessage -To "mng-hitnet@hitachi-kenki.com" -Cc "lay@hcma.com.au" -From "itservicedesk@hcma.com.au" -Subject "HCA LDAP ID Termination $LDAPFN $LDAPSN $LDAPID" -Body $email -SmtpServer smtp.hcma.com.au
+}
+
+
+ Set-Mailbox $user -HiddenFromAddressListsEnabled $true
+
+ Set-Mailbox -Identity $user -AcceptMessagesOnlyFrom @{add="Administrator"}
+
+ }
+
+function Get-HCABitlocker ()
+{
+
+$Recovinput = $objTextBox.text
+
+    Set-ExecutionPolicy -Scope Process -ExecutionPolicy Bypass
+
+#cd C:\users\a-lay\Documents
+
+import-module "\\grs-fsrv1\IT Documents\SERVICE DESK1\SCRIPTS\GUILocal\Bitlocker\Get-BDERecoveryPassword.ps1" -force
+
+#$RecovInput = read-host -Prompt "
+    #Enter 8 character recovery ID eg. B16DCDD8 | OR |  Computername eg. HIT-PC02LRTC "
+if ($Recovinput.Length -eq 8)
+{
+    Get-BDERecoveryPassword -RecoveryGUID $RecovInput |select RecoveryPassword
+}
+
+#if ($Recovinput.Length -gt 8)
+#{
+#    "
+#    Recovery ID entered is MORE THAN 8 chars"
+#}
+
+if ($Recovinput.Length -lt 8)
+{
+    "
+    Recovery ID entered is LESS THAN 8 chars"
+}
+
+if ($Recovinput.StartsWith("hit-") -or $Recovinput.StartsWith("HIT-") )
+{
+    Get-BDERecoveryPassword -ComputerName $RecovInput |select RecoveryPassword
+}
+
+
+
+}
+
+
+
+function Set-HCAPassword ($user, $pass)
+{
+    Set-ADAccountPassword -Identity $user -NewPassword (ConvertTo-SecureString -AsPlainText "$pass" -Force)
+}
+
+function good-pass{
+$user = $objTextBox.text
+
+$date = Get-Date -UFormat %d
+
+$NameList="Fortunefavoring", "Fishingsports", "Imagingphotos", "Solutionhighs", "Holidayblues", "Advancednotes", "Averagelimits", "Mysterycases",  "Centralcoast",  "Balancebeams",  "Chiefcommand",  "Complexforms",  "Countryroast",  "Displayscreen",  "Enhancepower",  "Freedomfighter",  "Imaginedream",  "Journeystart",  "Kingdomcoming",  "Historyalter",  "Outdoorsmans",  "Popularbelief",  "Regularlimits",  "Sessionended",  "Weekendshine",  "Victoryensues",  "Venturedouting",  "Virtualworld",  "Specialities",  "Qualitywords",  "Quarterpanel",  "Picturethisnow", "Accuratename", "Birthdayparty",  "Categorychange", "Contrastblack", "Creativeimage", "Criticalmass", "Designerwatch", "Discovertoday", "Electriccars", "Everydayperson", "Exercisedaily", "Externalvendor", "Guardianangel", "Industrystandard", "Languagechange", "Locationmaps", "Midnightstride", "Positiveoutcome", "Propertyvalue", "Reliablesolutions", "Questiontime", "Strengthpower", "Tomorrowhappy", "Valuableteam","Fishingtrips","Physicsclasses","Speakersystem","Penaltynotice","Collegefunds","Managerdirector","Fastarrivals","Specialability","Cleanclothes","Masterbedroom","Designconcept","Airportterminal","Weddingcrasher","Movingvehicle","Statehousing","Lostandfound","Woodencabinet","Exchangestudent","Freedomfighter","Madcowdisease","Varietymagazine","Negativeoutcome","Personalopinion","Greenmixture","Courageouscat","Newestversion","Foxtrotunicorn","Successearned","Technicalanalyst","Findingmeaning","Belttensioning","Positiveemotion","Greatteacher","Climatecontrol","Highcharities","Messagereceived","Problemsolved","Passionfruit","Highwaypatrol","Paymentrecieved","Historylesson","Qualitycontrol","Garbagetruck","Contextplease","Warningsignal","Readingaloud","Courthearing","Villagepeople","Charityevent","Parentteacher","Holychurches","Sacredgrounds","Ravenswooden","Legacystands"
+$symbollist="!","@","#","$","%","&","*"
+
+$passw0rd= Get-Random -InputObject $NameList
+
+$S1=Get-Random -InputObject $symbollist
+
+$global:finalpass = "$passw0rd$date$s1"
+
+Set-HCAPassword $user $global:finalpass 
+
+Clear-ADAccountExpiration $user
+
+if ($checkbox14.Checked)
+{
+Set-Aduser -Identity $user -ChangePasswordAtLogon $false
+$textbox3.Text ="Password set to $global:finalpass and will not require change"
+}
+else
+{
+    Set-Aduser -Identity $user -ChangePasswordAtLogon $true
+    $textbox3.Text ="Password set to $global:finalpass and will require change"
+}
+
+
+
+
+}
+
+
+Function Clear-HCASiteGroups ($username1)
+{
+
+foreach ($SID in $SIDS)
+{
+Remove-ADGroupMember -Identity $SID -Members $username1 -Confirm:$false
+}
+
+
+}
+<#
+function Ex13-Session ()
+{
+$EX13session = New-PSSession -ConfigurationName Microsoft.Exchange -ConnectionUri http://dc0-ex13c.hcma.com.au/PowerShell/ -Authentication Kerberos
+Import-PSSession $EX13session
+}
+#>
+function Move-HCASite ($dropdown)
+{
+
+
+if ($checkbox4.Checked)
+{
+$OU = "Generic,OU=$dropdown"
+Set-ADUser $objTextBox.text -Company $null
+$checkbox4.Checked=$false
+
+ }
+ else
+ {
+ $OU = "$dropdown"
+ }   
+
+
+
+if ($dropdown -eq "Parramatta")
+{
+Clear-HCASiteGroups $objTextBox.Text
+Add-ADGroupMember -Identity 7c377404-9b9c-40e6-a2ac-95ec76b95870 -members $objTextBox.text
+Add-ADGroupMember -Identity GLS-U-SYDFPRS1-Home -Members $objTextBox.text
+Get-ADuser $objTextBox.Text | Move-ADObject -TargetPath "OU=$ou,OU=Managed Users,OU=HCMA,DC=hcma,DC=com,DC=au"
+Set-ADUser -Identity $objTextBox.Text -Add @{telephoneNumber = "(02) 8863 4800"}
+Set-ADUser -Identity $objTextBox.Text -Fax '	(02) 8863-4899'
+$un2 = $objtextbox.text
+Set-ADUser -Identity $objTextBox.text -HomeDirectory "\\grs-fsrv1\users\$un2" -HomeDrive "H:"
+
+}
+if ($dropdown -eq "Adelaide")
+{
+Clear-HCASiteGroups $objTextBox.Text
+Add-ADGroupMember -Identity 01728730-a4c1-4de2-bd0d-0e033675324a -members $objTextBox.text
+Add-ADGroupMember -Identity GLS-U-ADL-FSRV1-Home -Members $objTextBox.text
+Get-ADuser $objTextBox.Text | Move-ADObject -TargetPath "OU=$ou,OU=Managed Users,OU=HCMA,DC=hcma,DC=com,DC=au"
+Set-ADUser -Identity $objTextBox.Text -Add @{telephoneNumber = "(08) 8360-5300"}
+Set-ADUser -Identity $objTextBox.Text -Fax '(08) 8360-5340'
+$un2 = $objtextbox.text
+Set-ADUser -Identity $objTextBox.text -HomeDirectory "\\adl-fsrv1\users\$un2" -HomeDrive "H:"
+}
+if ($dropdown -eq "Brisbane")
+{
+Clear-HCASiteGroups $objTextBox.Text
+Add-ADGroupMember -Identity a310faea-1d35-4e3d-8baa-7190e0df93ac -members $objTextBox.text
+Add-ADGroupMember -Identity GLS-U-BRI-FSRV1-Home -Members $objTextBox.text
+Get-ADuser $objTextBox.Text | Move-ADObject -TargetPath "OU=$ou,OU=Managed Users,OU=HCMA,DC=hcma,DC=com,DC=au"
+Set-ADUser -Identity $objTextBox.Text -Add @{telephonenumber="(07) 3276-4500"}
+Set-ADUser -Identity $objTextBox.Text -Fax '(07) 3216-7866'
+$un2 = $objtextbox.text
+Set-ADUser -Identity $objTextBox.text -HomeDirectory "\\bri-fsrv1\users\$un2" -HomeDrive "H:"
+}
+if ($dropdown -eq "Bunbury")
+{
+Clear-HCASiteGroups $objTextBox.Text
+Add-ADGroupMember -Identity 6d3fd786-5faa-477a-bb5e-709398c618c8 -members $objTextBox.text
+Add-ADGroupMember -Identity GLS-U-BUN-FSRV1-Home -Members $objTextBox.text
+Get-ADuser $objTextBox.Text | Move-ADObject -TargetPath "OU=$ou,OU=Managed Users,OU=HCMA,DC=hcma,DC=com,DC=au"
+Set-ADUser -Identity $objTextBox.Text -Add @{telephonenumber="(08) 9724-8300"}
+Set-ADUser -Identity $objTextBox.Text -Fax '(08) 9725-7581'
+$un2 = $objtextbox.text
+Set-ADUser -Identity $objTextBox.text -HomeDirectory "\\bun-fsrv1\users\$un2" -HomeDrive "H:"
+}
+if ($dropdown -eq "Canberra")
+{
+Clear-HCASiteGroups $objTextBox.Text
+Add-ADGroupMember -Identity e7617829-f173-496f-87b8-063a2046aa8f -members $objTextBox.text
+Add-ADGroupMember -Identity GLS-U-REV-FSRV1-Home -Members $objTextBox.text
+Get-ADuser $objTextBox.Text | Move-ADObject -TargetPath "OU=$ou,OU=Managed Users,OU=HCMA,DC=hcma,DC=com,DC=au"
+Set-ADUser -Identity $objTextBox.Text -Add @{telephonenumber="(02) 6239 1438"}
+Set-ADUser -Identity $objTextBox.Text -Fax '(02) 6239 1782'
+$un2 = $objtextbox.text
+Set-ADUser -Identity $objTextBox.text -HomeDirectory "\\rev-fsrv1\users\$un2" -HomeDrive "H:"
+}
+if ($dropdown -eq "Darwin")
+{
+Clear-HCASiteGroups $objTextBox.Text
+Add-ADGroupMember -Identity 119a2082-a95b-4ede-b77e-6c38fdb937bb -members $objTextBox.text
+Add-ADGroupMember -Identity GLS-U-DAR-FSRV1-Home -Members $objTextBox.text
+Get-ADuser $objTextBox.Text | Move-ADObject -TargetPath "OU=$ou,OU=Managed Users,OU=HCMA,DC=hcma,DC=com,DC=au"
+Set-ADUser -Identity $objTextBox.Text -Add @{telephonenumber="(08) 8942-7800"}
+Set-ADUser -Identity $objTextBox.Text -Fax '(08) 8942-7899'
+$un2 = $objtextbox.text
+Set-ADUser -Identity $objTextBox.text -HomeDirectory "\\dar-fsrv1\users\$un2" -HomeDrive "H:"
+}
+if ($dropdown -eq "Emerald")
+{
+Clear-HCASiteGroups $objTextBox.Text
+Add-ADGroupMember -Identity fff18d5f-a817-476c-930a-e364a2c44ca9 -members $objTextBox.text
+Add-ADGroupMember -Identity GLS-U-EML-FSRV1-Home -Members $objTextBox.text
+Get-ADuser $objTextBox.Text | Move-ADObject -TargetPath "OU=$ou,OU=Managed Users,OU=HCMA,DC=hcma,DC=com,DC=au"
+Set-ADUser -Identity $objTextBox.Text -Add @{telephonenumber="(07) 4980-6800"}
+Set-ADUser -Identity $objTextBox.Text -Fax '(07) 4987-6379'
+$un2 = $objtextbox.text
+Set-ADUser -Identity $objTextBox.text -HomeDirectory "\\eml-fsrv1\users\$un2" -HomeDrive "H:"
+}
+if ($dropdown -eq "Gunnedah")
+{
+Clear-HCASiteGroups $objTextBox.Text
+Add-ADGroupMember -Identity 32334ddb-1c9a-434a-8fd3-67db01c707b4 -members $objTextBox.text
+Add-ADGroupMember -Identity GLS-U-MUS-FSRV1-Home -Members $objTextBox.text
+Get-ADuser $objTextBox.Text | Move-ADObject -TargetPath "OU=$ou,OU=Managed Users,OU=HCMA,DC=hcma,DC=com,DC=au"
+Set-ADUser -Identity $objTextBox.Text -Add @{telephoneNumber = "(02) 6740 1700"}
+Set-ADUser -Identity $objTextBox.Text -Fax '(02) 8624 4702'
+$un2 = $objtextbox.text
+Set-ADUser -Identity $objTextBox.text -HomeDirectory "\\gun-fsrv1\users\$un2" -HomeDrive "H:"
+}
+if ($dropdown -eq "Kalgoorlie")
+{
+Clear-HCASiteGroups $objTextBox.Text
+Add-ADGroupMember -Identity 91ae0826-6c06-4336-9480-f5e492e82c4a -members $objTextBox.text
+Add-ADGroupMember -Identity GLS-U-KAL-FSRV1-Home -Members $objTextBox.text
+Get-ADuser $objTextBox.Text | Move-ADObject -TargetPath "OU=$ou,OU=Managed Users,OU=HCMA,DC=hcma,DC=com,DC=au"
+Set-ADUser -Identity $objTextBox.Text -Add @{telephonenumber="(08) 9025-2400"}
+Set-ADUser -Identity $objTextBox.Text -Fax '(08) 9025-2499'
+$un2 = $objtextbox.text
+Set-ADUser -Identity $objTextBox.text -HomeDirectory "\\kal-fsrv1\users\$un2" -HomeDrive "H:"
+}
+if ($dropdown -eq "Launceston")
+{
+Clear-HCASiteGroups $objTextBox.Text
+Add-ADGroupMember -Identity fc2dbcac-9868-4a1a-9b12-a4c954889b9c -members $objTextBox.text
+Add-ADGroupMember -Identity GLS-U-LAU-FSRV1-Home -Members $objTextBox.text
+Get-ADuser $objTextBox.Text | Move-ADObject -TargetPath "OU=$ou,OU=Managed Users,OU=HCMA,DC=hcma,DC=com,DC=au"
+Set-ADUser -Identity $objTextBox.Text -Add @{telephonenumber="(03) 6326-3435"}
+Set-ADUser -Identity $objTextBox.Text -Fax '(03) 6326-5916'
+$un2 = $objtextbox.text
+Set-ADUser -Identity $objTextBox.text -HomeDirectory "\\lau-fsrv1\users\$un2" -HomeDrive "H:"
+}
+if ($dropdown -eq "Mackay")
+{
+Clear-HCASiteGroups $objTextBox.Text
+Add-ADGroupMember -Identity e138a0f5-a934-4cba-b8d0-d9c9a129401c -members $objTextBox.text
+Add-ADGroupMember -Identity GLS-U-MCK-FSRV1-Home -Members $objTextBox.text
+Get-ADuser $objTextBox.Text | Move-ADObject -TargetPath "OU=$ou,OU=Managed Users,OU=HCMA,DC=hcma,DC=com,DC=au"
+Set-ADUser -Identity $objTextBox.Text -Add @{telephonenumber="(07) 4952-6800"}
+Set-ADUser -Identity $objTextBox.Text -Fax '(07) 4952-6900'
+$un2 = $objtextbox.text
+Set-ADUser -Identity $objTextBox.text -HomeDirectory "\\mck-fsrv1\users\$un2" -HomeDrive "H:"
+}
+if ($dropdown -eq "Melbourne")
+{
+Clear-HCASiteGroups $objTextBox.Text
+Add-ADGroupMember -Identity dc5104c3-9268-4829-8313-fbb7e0e3c51e -members $objTextBox.text
+Add-ADGroupMember -Identity GLS-U-MEL-FSRV1-Home -Members $objTextBox.text
+Get-ADuser $objTextBox.Text | Move-ADObject -TargetPath "OU=$ou,OU=Managed Users,OU=HCMA,DC=hcma,DC=com,DC=au"
+Set-ADUser -Identity $objTextBox.Text -Add @{telephonenumber="(03) 9791 6666"}
+Set-ADUser -Identity $objTextBox.Text -Fax '(03) 9791 8114'
+$un2 = $objtextbox.text
+Set-ADUser -Identity $objTextBox.text -HomeDirectory "\\mel-fsrv1\users\$un2" -HomeDrive "H:"
+}
+if ($dropdown -eq "Muswellbrook")
+{
+Clear-HCASiteGroups $objTextBox.Text
+Add-ADGroupMember -Identity 5757a7fd-2668-4633-9fbd-cdaeaa2a28e7 -members $objTextBox.text
+Add-ADGroupMember -Identity GLS-U-MUS-FSRV1-Home -Members $objTextBox.text
+Get-ADuser $objTextBox.Text | Move-ADObject -TargetPath "OU=$ou,OU=Managed Users,OU=HCMA,DC=hcma,DC=com,DC=au"
+Set-ADUser -Identity $objTextBox.Text -Add @{telephonenumber="(02) 6541-6300"}
+Set-ADUser -Identity $objTextBox.Text -Fax '(02) 6541-6399'
+$un2 = $objtextbox.text
+Set-ADUser -Identity $objTextBox.text -HomeDirectory "\\mus-fsrv1\users\$un2" -HomeDrive "H:"
+}
+if ($dropdown -eq "Newcastle")
+{
+Clear-HCASiteGroups $objTextBox.Text
+Add-ADGroupMember -Identity 7e78c631-240a-4144-a6ca-b9f830379de5 -members $objTextBox.text
+Add-ADGroupMember -Identity GLS-U-NEW-FSRV1-Home -Members $objTextBox.text
+Get-ADuser $objTextBox.Text | Move-ADObject -TargetPath "OU=$ou,OU=Managed Users,OU=HCMA,DC=hcma,DC=com,DC=au"
+Set-ADUser -Identity $objTextBox.Text -Add @{telephonenumber="(02) 4964-4550"}
+Set-ADUser -Identity $objTextBox.Text.Text -Fax '(02) 4966-8021'
+$un2 = $objtextbox.text
+Set-ADUser -Identity $objTextBox.text -HomeDirectory "\\new-fsrv1\users\$un2" -HomeDrive "H:"
+}
+if ($dropdown -eq "Perth")
+{
+Clear-HCASiteGroups $objTextBox.Text
+Add-ADGroupMember -Identity 89f37684-cd78-43b6-b547-cc25cde2f122 -members $objTextBox.text
+Add-ADGroupMember -Identity GLS-U-PER-FSRV1-Home -Members $objTextBox.text
+Get-ADuser $objTextBox.Text | Move-ADObject -TargetPath "OU=$ou,OU=Managed Users,OU=HCMA,DC=hcma,DC=com,DC=au"
+Set-ADUser -Identity $objTextBox.Text -Add @{telephonenumber="(08) 9234 9800"}
+Set-ADUser -Identity $objTextBox.Text -Fax '(08) 9234 9990'
+$un2 = $objtextbox.text
+Set-ADUser -Identity $objTextBox.text -HomeDirectory "\\per-fsrv1\users\$un2" -HomeDrive "H:"
+}
+if ($dropdown -eq "Port Headland")
+{
+Clear-HCASiteGroups $objTextBox.Text
+Add-ADGroupMember -Identity 50b6b502-430e-4956-8a43-9bea87f8243f -members $objTextBox.text
+Add-ADGroupMember -Identity GLS-U-PER-FSRV1-Home -Members $objTextBox.text
+Get-ADuser $objTextBox.Text | Move-ADObject -TargetPath "OU=$ou,OU=Managed Users,OU=HCMA,DC=hcma,DC=com,DC=au"
+Set-ADUser -Identity $objTextBox.Text -Add @{telephonenumber="(08) 9172-6800"}
+Set-ADUser -Identity $objTextBox.Text -Fax '(08) 9172-6899'
+$un2 = $objtextbox.text
+Set-ADUser -Identity $objTextBox.text -HomeDirectory "\\per-fsrv1\users\$un2" -HomeDrive "H:"
+}
+if ($dropdown -eq "Somerton")
+{
+Clear-HCASiteGroups $objTextBox.Text
+Add-ADGroupMember -Identity 23f1179a-29ea-4524-a7d6-bebf558d28d7 -members $objTextBox.text
+Add-ADGroupMember -Identity GLS-U-SOM-FSRV1-Home -Members $objTextBox.text
+Get-ADuser $objTextBox.Text | Move-ADObject -TargetPath "OU=$ou,OU=Managed Users,OU=HCMA,DC=hcma,DC=com,DC=au"
+Set-ADUser -Identity $objTextBox.Text -Add @{telephonenumber="(03) 9303-6700"}
+Set-ADUser -Identity $objTextBox.Text -Fax '(03) 9303-6799'
+$un2 = $objtextbox.text
+Set-ADUser -Identity $objTextBox.text -HomeDirectory "\\som-fsrv1\users\$un2" -HomeDrive "H:"
+}
+if ($dropdown -eq "Revesby")
+{
+Clear-HCASiteGroups $objTextBox.Text
+Add-ADGroupMember -Identity 149bfd89-4f8e-4932-9ba6-6913732ef369 -members $objTextBox.text
+Add-ADGroupMember -Identity GLS-U-REV-FSRV1-Home -Members $objTextBox.text
+Get-ADuser $objTextBox.Text | Move-ADObject -TargetPath "OU=$ou,OU=Managed Users,OU=HCMA,DC=hcma,DC=com,DC=au"
+Set-ADUser -Identity $objTextBox.Text -Add @{telephonenumber="(02) 9780-6900"}
+Set-ADUser -Identity $objTextBox.Text -Fax '(02) 9780-6999'
+$un2 = $objtextbox.text
+Set-ADUser -Identity $objTextBox.text -HomeDirectory "\\rev-fsrv1\users\$un2" -HomeDrive "H:"
+}
+if ($dropdown -eq "Tom Price")
+{
+Clear-HCASiteGroups $objTextBox.Text
+Add-ADGroupMember -Identity 291296ad-b426-4686-b4c0-fdcc293979c1 -members $objTextBox.text
+Add-ADGroupMember -Identity GLS-U-PER-FSRV1-Home -Members $objTextBox.text
+Get-ADuser $objTextBox.Text | Move-ADObject -TargetPath "OU=$ou,OU=Managed Users,OU=HCMA,DC=hcma,DC=com,DC=au"
+Set-ADUser -Identity $objTextBox.Text -Add @{telephonenumber="(08) 9188-2390"}
+Set-ADUser -Identity $objTextBox.Text -Fax '	(02) 8863-4899'
+$un2 = $objtextbox.text
+Set-ADUser -Identity $objTextBox.text -HomeDirectory "\\per-fsrv1\users\$un2" -HomeDrive "H:"
+}
+if ($dropdown -eq "Toowoomba")
+{
+Clear-HCASiteGroups $objTextBox.Text
+#Add-ADGroupMember -Identity ec27144a-0f98-4fce-bf18-f244618d2be6 -members $objTextBox.text
+#Add-ADGroupMember -Identity GLS-U-TWN-FSRV1-Home -Members $objTextBox.text
+#Get-ADuser $objTextBox.Text | Move-ADObject -TargetPath "OU=$ou,OU=Managed Users,OU=HCMA,DC=hcma,DC=com,DC=au"
+#Set-ADUser -Identity $objTextBox.Text -Add @{telephonenumber="(07) 4727-5100"}
+#Set-ADUser -Identity $objTextBox.Text -Fax '(07) 4727-5199'
+}
+if ($dropdown -eq "Townsville")
+{
+Clear-HCASiteGroups $objTextBox.Text
+Add-ADGroupMember -Identity ec27144a-0f98-4fce-bf18-f244618d2be6 -members $objTextBox.text
+Add-ADGroupMember -Identity GLS-U-TWN-FSRV1-Home -Members $objTextBox.text
+Get-ADuser $objTextBox.Text | Move-ADObject -TargetPath "OU=$ou,OU=Managed Users,OU=HCMA,DC=hcma,DC=com,DC=au"
+Set-ADUser -Identity $objTextBox.Text -Add @{telephonenumber="(07) 4727-5100"}
+Set-ADUser -Identity $objTextBox.Text -Fax '(07) 4727-5199'
+$un2 = $objtextbox.text
+Set-ADUser -Identity $objTextBox.text -HomeDirectory "\\twn-fsrv1\users\$un2" -HomeDrive "H:"
+}
+if ($dropdown -eq "Wacol")
+{
+Clear-HCASiteGroups $objTextBox.Text
+Add-ADGroupMember -Identity 35893660-dbcb-4ed2-9465-fccf3565ea86 -members $objTextBox.text
+Add-ADGroupMember -Identity GLS-U-BRM-FSRV1-Home -Members $objTextBox.text
+Get-ADuser $objTextBox.Text | Move-ADObject -TargetPath "OU=$ou,OU=Managed Users,OU=HCMA,DC=hcma,DC=com,DC=au"
+Set-ADUser -Identity $objTextBox.Text -Add @{telephonenumber="(07) 3423 5600"}
+Set-ADUser -Identity $objTextBox.Text -Fax '(07) 3423-5699'
+$un2 = $objtextbox.text
+Set-ADUser -Identity $objTextBox.text -HomeDirectory "\\brm-fsrv1\users\$un2" -HomeDrive "H:"
+}
+
+Add-DefaultGroups $objTextBox.text
+
+if ($dmsaccess1.checked)
+{
+    add-adgroupmember 'GG-AzureLicensing-D365Finance-HCA' -Members $objTextBox.text
+    $dmsaccess1.checked=$false
+}
+if ($dmsaccess2.checked)
+{
+    add-adgroupmember 'GG-AzureLicensing-D365Activity-HCA' -Members $objTextBox.text
+    $dmsaccess2.checked=$false
+}
+if ($crmaccess1.checked)
+{
+    add-adgroupmember 'GG-AzureLicensing-Dynamics365Sales-HCA' -Members $objTextBox.text
+    $crmaccess1.checked=$false
+
+}
+
+if ($amtaccess.Checked)
+{
+Add-ADGroupMember 'AMT Users' -Members $objTextBox.text
+$amtaccess.Checked=$false
+}
+
+if ($msaccess.Checked)
+{
+Add-ADGroupMember 'GG_SQL_MPE' -Members $objTextBox.text
+$msaccess.Checked=$false
+}
+
+} 
+
+function Exchange-Server ()
+
+{
+$user = $objTextBox.text
+Get-mailbox -identity $user | select database
+}
+
+
+function Get-RemoteComputerInfo()
+
+{
+
+$ArrComputers =  $objTextBox.Text
+#Specify the list of PC names in the line above. "." means local system
+
+Clear-Host
+foreach ($Computer in $ArrComputers) 
+{
+    $computerSystem = get-wmiobject Win32_ComputerSystem -Computer $Computer
+    $computerBIOS = get-wmiobject Win32_BIOS -Computer $Computer
+    $computerOS = get-wmiobject Win32_OperatingSystem -Computer $Computer
+    $computerCPU = get-wmiobject Win32_Processor -Computer $Computer
+    $computerHDD = Get-WmiObject Win32_LogicalDisk -ComputerName $Computer -Filter drivetype=3
+        "System Information for: " + $computerSystem.Name
+        "
+        -------------------------------------------------------"
+        "
+        Manufacturer: " + $computerSystem.Manufacturer
+        "
+        Model: " + $computerSystem.Model
+        "
+        Serial Number: " + $computerBIOS.SerialNumber
+        "
+        CPU: " + $computerCPU.Name
+        "
+        HDD Capacity: "  + "{0:N2}" -f ($computerHDD.Size/1GB) + "GB"
+        "
+        HDD Space: " + "{0:P2}" -f ($computerHDD.FreeSpace/$computerHDD.Size) + " Free (" + "{0:N2}" -f ($computerHDD.FreeSpace/1GB) + "GB)"
+        "
+        RAM: " + "{0:N2}" -f ($computerSystem.TotalPhysicalMemory/1GB) + "GB"
+        "
+        Operating System: " + $computerOS.caption + ", Service Pack: " + $computerOS.ServicePackMajorVersion
+        "
+        User logged In: " + $computerSystem.UserName
+        "
+        Last Reboot: " + $computerOS.ConvertToDateTime($computerOS.LastBootUpTime)
+        "
+        "
+        "
+        -------------------------------------------------------"
+}
+
+}
+
+
+function Add-DefaultGroups ($user)
+{
+add-adgroupmember 'gg-mfa-users' -Members $user
+add-adgroupmember 'gg-mfa-d365' -Members $user
+add-adgroupmember 'GG-AzureLicensing-Microsoft365E5-HCA' -Members $user
+Add-ADGroupMember 'netskope users' -Members $user
+Add-ADGroupMember 'GG-AzureLicensing-EDR-HCA' -Members $user
+add-adgroupmember 'vpn users - cisco' -Members $user
+set-casmailbox $user -OWAEnabled $false
+}
+
+function Finish-ADAccount ()
+{
+ import-Module ActiveDirectory
+
+ $user = $objTextBox.text
+
+function Set-HCAPassword ($user, $pass)
+{
+    Set-ADAccountPassword -Identity $user -NewPassword (ConvertTo-SecureString -AsPlainText "$pass" -Force)
+}
+
+$date = Get-Date
+
+$pw = $date.day
+
+$NameList="Fortunefavoring", "Fishingsports", "Imagingphotos", "Solutionhighs", "Holidayblues", "Advancednotes", "Averagelimits", "Mysterycases",  "Centralcoast",  "Balancebeams",  "Chiefcommand",  "Complexforms",  "Countryroast",  "Displayscreen",  "Enhancepower",  "Freedomfighter",  "Imaginedream",  "Journeystart",  "Kingdomcoming",  "Historyalter",  "Outdoorsmans",  "Popularbelief",  "Regularlimits",  "Sessionended",  "Weekendshine",  "Victoryensues",  "Venturedouting",  "Virtualworld",  "Specialities",  "Qualitywords",  "Quarterpanel",  "Picturethisnow", "Accuratename", "Birthdayparty",  "Categorychange", "Contrastblack", "Creativeimage", "Criticalmass", "Designerwatch", "Discovertoday", "Electriccars", "Everydayperson", "Exercisedaily", "Externalvendor", "Guardianangel", "Industrystandard", "Languagechange", "Locationmaps", "Midnightstride", "Positiveoutcome", "Propertyvalue", "Reliablesolutions", "Questiontime", "Strengthpower", "Tomorrowhappy", "Valuableteam","Fishingtrips","Physicsclasses","Speakersystem","Penaltynotice","Collegefunds","Managerdirector","Fastarrivals","Specialability","Cleanclothes","Masterbedroom","Designconcept","Airportterminal","Weddingcrasher","Movingvehicle","Statehousing","Lostandfound","Woodencabinet","Exchangestudent","Freedomfighter","Madcowdisease","Varietymagazine","Negativeoutcome","Personalopinion","Greenmixture","Courageouscat","Newestversion","Foxtrotunicorn","Successearned","Technicalanalyst","Findingmeaning","Belttensioning","Positiveemotion","Greatteacher","Climatecontrol","Highcharities","Messagereceived","Problemsolved","Passionfruit","Highwaypatrol","Paymentrecieved","Historylesson","Qualitycontrol","Garbagetruck","Contextplease","Warningsignal","Readingaloud","Courthearing","Villagepeople","Charityevent","Parentteacher","Holychurches","Sacredgrounds","Ravenswooden","Legacystands"
+
+$symbollist="!","@","#","$","%","^","&","*","(",")"
+
+$passw0rd= Get-Random -InputObject $NameList
+
+$S1=Get-Random -InputObject $symbollist
+$S2=Get-Random -InputObject $symbollist
+
+add-adgroupmember 'gg-mfa-users' -Members $user
+add-adgroupmember 'gg-mfa-d365' -Members $user
+add-adgroupmember 'GG-AzureLicensing-Microsoft365E5-HCA' -Members $user
+Add-ADGroupMember 'netskope users' -Members $user
+Add-ADGroupMember 'GG-AzureLicensing-EDR-HCA' -Members $user
+add-adgroupmember 'vpn users - cisco' -Members $user
+set-casmailbox $user -OWAEnabled $false
+
+$global:finalpass = "$passw0rd$pw$s1$s2"
+
+Set-HCAPassword $user $global:finalpass 
+
+Clear-ADAccountExpiration $user
+
+Enable-ADAccount $user
+
+Set-Aduser -Identity $user -ChangePasswordAtLogon $true
+
+#set-aduser -Identity $user -Company "HCMA"
+
+$desc1 = get-aduser $user -Properties title | select title
+
+$desc2 = $desc1.title
+
+Set-ADUser $user -Description "$desc2"
+
+Move-HCASite $ComboBox1.Text 
+
+
+$dropdown1 = $ComboBox1.Text 
+
+if ($checkbox14.Checked)
+{
+
+if ($checkbox4.Checked)
+{
+Set-Aduser -Identity $user -ChangePasswordAtLogon $false
+$textbox3.Text = "Site groups have been changed to $dropdown1 Generic
+Password set to $global:finalpass and will not require change"
+ }
+ else
+ {
+Set-Aduser -Identity $user -ChangePasswordAtLogon $false
+$textbox3.Text = "Site groups have been changed to $dropdown1 
+Password set to $global:finalpass and will not require change"
+ }  
+
+}
+else
+{
+
+if ($checkbox4.Checked)
+{
+Set-Aduser -Identity $user -ChangePasswordAtLogon $true
+$textbox3.Text = "Site groups have been changed to $dropdown Generic
+Password set to $global:finalpass and will require change"
+ }
+ else
+ {
+Set-Aduser -Identity $user -ChangePasswordAtLogon $true
+$textbox3.Text = "Site groups have been changed to $dropdown 
+Password set to $global:finalpass and will require change"
+ }  
+
+} 
+
+if ($dmsaccess1.checked)
+{
+    add-adgroupmember 'GG-AzureLicensing-D365Finance-HCA' -Members $user
+    $dmsaccess1.checked=$false
+}
+if ($dmsaccess2.checked)
+{
+    add-adgroupmember 'GG-AzureLicensing-D365Activity-HCA' -Members $user
+    $dmsaccess2.checked=$false
+}
+if ($crmaccess1.checked)
+{
+    add-adgroupmember 'GG-AzureLicensing-Dynamics365Sales-HCA' -Members $user
+    $crmaccess1.checked=$false
+
+}
+
+if ($amtaccess.Checked)
+{
+Add-ADGroupMember 'AMT Users' -Members $user 
+$amtaccess.Checked=$false
+}
+
+if ($msaccess.Checked)
+{
+Add-ADGroupMember 'GG_SQL_MPE' -Members $user 
+$msaccess.Checked=$false
+}
+   
+}
+
+function get-mailinfo ()
+
+{
+$MailboxInfo = get-mailbox $objTextBox.Text |select name,alias,*siz*,*quot*,servername,database  
+$MailboxInfo2 = get-casmailbox $objTextBox.Text |select owaenabled
+"Name: " + $MailboxInfo.name 
+
+"
+Alias: " + $MailboxInfo.alias
+
+"
+OWA Enabled: " + $MailboxInfo2.owaenabled
+
+"
+Max Send Size: " + $MailboxInfo.maxsendsize
+"
+Max Recieve Size: " + $MailboxInfo.MaxReceiveSize
+"
+Prohibit Send Quota :" + $MailboxInfo.prohibitsendquota
+"
+Prohibit Send/Recieve: " + $MailboxInfo.ProhibitSendReceiveQuota
+"
+Use Database Quota Defaults: " + $MailboxInfo.UseDatabaseQuotaDefaults
+"
+Issue Warning: " + $MailboxInfo.IssueWarningQuota
+"
+Server Name: " + $MailboxInfo.ServerName
+"
+Database: " + $MailboxInfo.Database
+
+
+}
+
+
+function Get-NextAva ($TestName)
+
+{
+
+$Comma = $TestName.IndexOf(",")
+ $lastname = $TestName.Substring(0, $Comma)
+ $Firstname = $TestName.Substring($Comma + 2, $TestName.Length - $Comma - 2)
+ $F1 = $TestName.Substring($Comma + 2, 1)
+ $F2 = $TestName.Substring($Comma + 3, 1)
+ if ($Firstname.length -gt 2){
+ $F3 = $TestName.Substring($Comma + 4, 1)
+ }
+ if ($Firstname.length -gt 3){
+ $F4 = $TestName.Substring($Comma + 5, 1)
+ }
+ if ($Firstname.length -gt 4){
+ $F5 = $TestName.Substring($Comma + 6, 1)
+ }
+ if ($Firstname.length -gt 5){
+ $F6 = $TestName.Substring($Comma + 7, 1)
+ }
+ if ($Firstname.length -gt 6){
+ $F7 = $TestName.Substring($Comma + 8, 1)
+ }
+
+
+# "Last name is '{0}'" -f $Last
+# "First name is '{0}'" -f $First
+
+
+$user1 = "$lastname"+"$F1"
+$user2 = "$lastname"+"$F1"+"$F2"
+$user3 = "$lastname"+"$F1"+"$F2"+"$F3"
+$user4 = "$lastname"+"$F1"+"$F2"+"$F3"+"$F4"
+$user5 = "$lastname"+"$F1"+"$F2"+"$F3"+"$F4"+"$F5"
+$user6 = "$lastname"+"$F1"+"$F2"+"$F3"+"$F4"+"$F5"+"$F6"
+$user7 = "$lastname"+"$F1"+"$F2"+"$F3"+"$F4"+"$F5"+"$F6"+"$F7"
+
+
+$samFilter = "{0}*" -f $lastname
+$sam = get-aduser -filter { samaccountname -like $samFilter }
+$sam1name = $sam.samaccountname
+
+if ($sam.samaccountname -contains $lastname)
+{
+  $sam2Filter = "{0}{1}*" -f $lastname, $F1
+  $sam2 = get-aduser -filter { samaccountname -like $sam2Filter }
+} if ($sam2 -eq $null) {
+  $sam1name
+}
+
+if ($sam1name -notcontains "$lastname"+"$F1")
+
+{
+  $textbox3.text = "
+----------------
+
+The next avaliable is $user1
+
+----------------"
+return
+}
+ 
+
+$sam2name = $sam2.samaccountname
+
+if ($sam2name -contains "$user1")
+{
+  $sam3Filter = "{0}{1}{2}*" -f $lastname, $F1, $F2
+  $sam3 = get-aduser -filter { samaccountname -like $sam3Filter }
+} if ($sam3-eq $null) {
+  $sam2name
+ 
+}
+
+
+if ($sam2name -notcontains "$user2")
+
+{
+ $textbox3.text = "
+----------------
+
+The next avaliable is $user2
+
+----------------"
+return
+}
+ 
+
+ 
+$sam3name = $sam3.samaccountname
+
+if ($sam3name -contains "$user2")
+{
+  $sam4Filter = "{0}{1}{2}{3}*" -f $lastname, $F1, $F2, $F3
+  $sam4 = get-aduser -filter { samaccountname -like $sam4Filter }
+} if ($sam4-eq $null) {
+  $sam3name
+ 
+}
+
+
+if ($sam3name -notcontains "$user3")
+
+{
+$textbox3.text = "
+----------------
+
+The next avaliable is $user3
+
+----------------"
+return
+}
+
+
+
+$sam4name = $sam4.samaccountname
+
+if ($sam4name -contains "$user3")
+{
+  $sam5Filter = "{0}{1}{2}{3}{4}*" -f $lastname, $F1, $F2, $F3, $F4
+  $sam5 = get-aduser -filter { samaccountname -like $sam5Filter }
+} if ($sam5-eq $null) {
+  $sam4name
+ 
+}
+
+
+if ($sam4name -notcontains "$user4")
+
+{
+$textbox3.text = "
+----------------
+
+The next avaliable is $user4
+
+----------------"
+return
+}
+
+}
+
+
+
+function Create-Mailbox ()
+{
+
+
+if ($no4 -ne $null)
+{
+$result = $user4
+}
+
+if ($no3 -ne $null)
+{
+$result = $user3
+}
+
+if ($no2 -ne $null)
+{
+$result = $user2
+}
+
+if ($no1 -ne $null)
+{
+$result = $user1
+}
+
+
+
+$Firstname123 = $usertextbox.Text
+$Lastname123 = $userlasttextbox.Text
+
+Find-NextAva ($Firstname123, $Lastname123)
+
+
+$date = Get-Date
+
+$pw = $date.day
+
+$pass = "Hitachi"+$pw 
+
+$password = ConvertTo-SecureString -String $pass -AsPlainText -Force
+
+$Site = $combobox2.text
+
+$name = $Lastname123 + ", " + $Firstname123
+
+if ($checkbox4.Checked)
+{
+$OU = "hcma.com.au/HCMA/Managed Users/$Site/Generic"
+ }
+ else
+ {
+ $OU = "hcma.com.au/HCMA/Managed Users/$Site"
+ }   
+
+ New-ADUser -SamAccountName $result -Name $TestName  -OrganizationalUnit $OU -AccountPassword (ConvertTo-SecureString -string $pass -AsPlainText -Force)
+
+ $textbox2.text = $Firstname123 + $Lastname123 + "has been created with the username" + $result + "and under the OU: " + $OU
+}
+
+#1
+#Call the Function
+
+CreateForm
